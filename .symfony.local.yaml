@@ -1,0 +1,3 @@
+workers:
+  proxy_start:
+    cmd: ['symfony', 'proxy:start']
