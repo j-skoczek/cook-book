@@ -1,5 +1,4 @@
 workers:
   proxy_start:
     cmd: ['symfony', 'proxy:start']
-  docker_compose:
-    cmd: ['symfony', 'run', 'docker', 'compose', 'up']
+  docker_compose: ~

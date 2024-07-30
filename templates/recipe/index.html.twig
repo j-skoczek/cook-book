@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ recipe }}{% endblock %}
+
+{% block body %}
+
+    <h2>{{ recipe }} Recipe</h2>
+
+    {% if comments|length > 0 %}
+        {% for comment in comments %}
+
+            {# TODO: HANDLE PHOTOS #}
+
+            {# {% if comment.photofilename %}
+                <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-width: 200px" />
+            {% endif %} #}
+
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.created|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ comment.text }}</p>
+        {% endfor %}
+    {% else %}
+        <div>No comments.</div>
+    {% endif %}
+
+{% endblock %}

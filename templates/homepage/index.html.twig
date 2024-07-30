@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Cook book{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h2>You have saved {{recipes|length}} recipes</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/skoczek/phpProjects/cookbook/src/Controller/HomepageController.php</code></li>
-        <li>Your template at <code>/home/skoczek/phpProjects/cookbook/templates/homepage/index.html.twig</code></li>
-    </ul>
-</div>
+    {% for recipe in recipes %}
+        <a href="{{ path('app_recipe', { id: recipe.id }) }}">
+            <h4>{{ recipe }}</h4>
+        </a>
+    {% endfor %}
+
+    {% if previousPage >= 0 %}
+        <a href="{{ path('app_homepage', {offset: previousPage }) }}">Previous page</a>
+    {% endif %}
+    {% if nextPage < recipes|length %}
+        <a href="{{ path('app_homepage', {offset: nextPage }) }}">Next page</a>
+    {% endif %}
 {% endblock %}
