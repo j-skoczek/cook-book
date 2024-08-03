@@ -7,8 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[UniqueEntity('slug')]
 class Recipe
 {
     #[ORM\Id]
@@ -33,6 +36,9 @@ class Recipe
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pictureFileName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -125,5 +131,24 @@ class Recipe
         $this->pictureFileName = $pictureFileName;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if (!$this->slug || $this->slug === '-') {
+            $this->slug = (string) $slugger->slug((string) $this)->lower();
+        }
     }
 }

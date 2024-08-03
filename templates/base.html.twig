@@ -22,7 +22,7 @@
 			<ul>
 				{% for recipe in recipes %}
 					<li>
-						<a href="{{ path('app_recipe', { id: recipe.id }) }}">{{ recipe }}</a>
+						<a href="{{ path('app_recipe', { slug: recipe.slug }) }}">{{ recipe }}</a>
 					</li>
 				{% endfor %}
 			</ul>

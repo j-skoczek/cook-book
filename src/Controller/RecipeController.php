@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
-    #[Route('/recipe/{id}', name: 'app_recipe')]
+    #[Route('/recipe/{slug}', name: 'app_recipe')]
     public function show(Recipe $recipe, CommentRepository $commentRepository): Response
     {
         return $this->render('recipe/index.html.twig', [
