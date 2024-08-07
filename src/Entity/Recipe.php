@@ -5,13 +5,18 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
+use Doctrine\ORM\Mapping\EntityListeners;
+use App\EventListener\RecipeEntityListener;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[UniqueEntity('slug')]
+#[ORM\HasLifecycleCallbacks]
+#[EntityListeners([RecipeEntityListener::class])]
 class Recipe
 {
     #[ORM\Id]
@@ -20,12 +25,14 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $ingredients = [];
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $recipe = null;
 
     /**
@@ -148,7 +155,7 @@ class Recipe
     public function computeSlug(SluggerInterface $slugger)
     {
         if (!$this->slug || $this->slug === '-') {
-            $this->slug = (string) $slugger->slug((string) $this)->lower();
+            $this->slug = (string) $slugger->slug((string) $this)->lower() . '-' . $this->id;
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Twig\Environment;
 use App\Entity\Recipe;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Response;

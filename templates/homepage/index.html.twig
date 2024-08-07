@@ -1,21 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cook book{% endblock %}
+{% block title %}Cook book
+{% endblock %}
 
 {% block body %}
 
-    <h2>You have saved {{recipes|length}} recipes</h2>
+	<h2>You have saved
+		{{recipes|length}}
+		recipes</h2>
 
-    {% for recipe in recipes %}
-        <a href="{{ path('app_recipe', { slug: recipe.slug }) }}">
-            <h4>{{ recipe }}</h4>
-        </a>
-    {% endfor %}
+	{% for recipe in recipes %}
+		<a href="{{ path('app_recipe', { slug: recipe.slug }) }}">
+			<h4>{{ recipe }}</h4>
+		</a>
+	{% endfor %}
 
-    {% if previousPage >= 0 %}
-        <a href="{{ path('app_homepage', {offset: previousPage }) }}">Previous page</a>
-    {% endif %}
-    {% if nextPage < recipes|length %}
-        <a href="{{ path('app_homepage', {offset: nextPage }) }}">Next page</a>
-    {% endif %}
+	{% if previousPage >= 0 %}
+		<a href="{{ path('app_homepage', {offset: previousPage }) }}">Previous page</a>
+	{% endif %}
+	{% if nextPage < recipes|length %}
+		<a href="{{ path('app_homepage', {offset: nextPage }) }}">Next page</a>
+	{% endif %}
+
+	<h2>Add you own recipes here !</h2>
+
+	{{form(recipe_form)}}
 {% endblock %}
